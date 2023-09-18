@@ -11,11 +11,12 @@ void GameState::Reset()
 	player2_column  = 0;
 	coin_row       = 10;
 	coin_column    = 10;
-	coin_collected = false;
+	player1CoinCollected = false;
+	player2CoinCollected = false;
 }
 	
 bool GameState::IsTerminal()
 {
-	if (coin_collected) return true;
+	if (player1CoinCollected || player2CoinCollected) return true;
 	return false;
 }

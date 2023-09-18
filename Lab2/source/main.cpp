@@ -6,11 +6,11 @@
 // Show the player and coin position
 void ShowWorld(GameState& game_state)
 {
-    consoleClear();
+	consoleClear();
 	iprintf("\x1b[%d;%dHX", game_state.player1_row, game_state.player1_column);
 	iprintf("\x1b[%d;%dH$", game_state.player2_row, game_state.player2_column);
-    if (!game_state.coin_collected)
-        iprintf("\x1b[%d;%dH0", game_state.coin_row, game_state.coin_column);
+	if (!(game_state.player1CoinCollected || game_state.player2CoinCollected))
+		iprintf("\x1b[%d;%dH0", game_state.coin_row, game_state.coin_column);
 }
 
 // It is run just once at the beginning
@@ -48,14 +48,35 @@ int main()
 {
 	GameState    game_state;
 	ForwardModel forward_model;
-	
+	// PrintConsole pantalla_sup, pantalla_inf;
+	// videoSetMode    (MODE_0_2D);
+	// videoSetModeSub (MODE_0_2D);
+
+	// consoleInit(&pantalla_sup,
+	// 	3,
+	// 	BgType_Text4bpp,
+	// 	BgSize_T_256x256,
+	// 	31,
+	// 	0,
+	// 	true,
+	// 	true );
+
+	// consoleInit(&pantalla_inf,
+	// 	3,
+	// 	BgType_Text4bpp,
+	// 	BgSize_T_256x256,
+	// 	31,
+	// 	0,
+	// 	false,
+	// 	true );
+		
 	SetUp(game_state);
 	while(1)
 	{
-        if (!game_state.IsTerminal())
-		    Update(game_state, forward_model);
-        else
-            ShowWorld(game_state);
-        swiWaitForVBlank();
+		if (!game_state.IsTerminal())
+			Update(game_state, forward_model);
+		else
+			ShowWorld(game_state);
+		swiWaitForVBlank();
 	}
 }

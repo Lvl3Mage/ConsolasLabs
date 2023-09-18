@@ -30,5 +30,7 @@ void ForwardModel::Step(GameState& game_state, Action& player1Action, Action& pl
 
     // Detect if the player collects the coin
     if (game_state.player1_row == game_state.coin_row && game_state.player1_column == game_state.coin_column)
-        game_state.coin_collected = true;
+        game_state.player1CoinCollected = true;
+    if (game_state.player2_row == game_state.coin_row && game_state.player2_column == game_state.coin_column)
+        game_state.player2CoinCollected = true;
 }
