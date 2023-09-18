@@ -11,16 +11,26 @@ void ShowWorld(GameState& game_state, PrintConsole& screenTop, PrintConsole& scr
 	consoleSelect(&screenBottom);
 	iprintf("\x1b[%d;%dHX", game_state.player1_row, game_state.player1_column);
 	iprintf("\x1b[%d;%dH$", game_state.player2_row, game_state.player2_column);
-	if (!(game_state.player1CoinCollected || game_state.player2CoinCollected))
-		iprintf("\x1b[%d;%dH0", game_state.coin_row, game_state.coin_column);
+	consoleSelect(&screenTop);
+	iprintf("\x1b[%d;%dHPlayer 1: %d", 18, 2, game_state.player1CoinsCollected);
+	iprintf("\x1b[%d;%dHPlayer 2: %d", 18, 20, game_state.player2CoinsCollected);
+	if (!game_state.IsTerminal()){
+		consoleSelect(&screenBottom);
+		for(int i = 0; i < game_state.coinRows.size();i++){
+			iprintf("\x1b[%d;%dH0", game_state.coinRows[i], game_state.coinColumns[i]);
+		}
+	}
 	else{
 		consoleSelect(&screenTop);
-		if(game_state.player1CoinCollected){
-			iprintf("\x1b[%d;%dHPlayer 1 wins!", 6, 6);
+		if(game_state.player1CoinsCollected > game_state.player2CoinsCollected){
+			iprintf("\x1b[%d;%dHPlayer 1 wins!", 12, 10);
+		}
+		else if(game_state.player1CoinsCollected < game_state.player2CoinsCollected){
+			iprintf("\x1b[%d;%dHPlayer 2 wins!", 12, 10);
+
 		}
 		else{
-			iprintf("\x1b[%d;%dHPlayer 2 wins!", 6, 6);
-
+			iprintf("\x1b[%d;%dHDraw!", 12, 16);
 		}
 	}
 }
@@ -56,9 +66,11 @@ void Update(GameState& game_state, ForwardModel& forward_model, PrintConsole& sc
 // -----------------------------------
 // Main program
 // -----------------------------------
+
 int main()
 {
 	GameState    game_state;
+	game_state.Reset();
 	ForwardModel forward_model;
 	PrintConsole screenTop, screenBottom;
 	videoSetMode    (MODE_0_2D);
