@@ -87,8 +87,14 @@ int main()
 	{
 		if (!game_state.IsTerminal())
 			Update(game_state, forward_model, screenTop, screenBottom);
-		else
-			ShowWorld(game_state,screenTop,screenBottom);
+		else{
+			scanKeys();
+			u32 key = keysDown();
+			if(key & KEY_START){
+				game_state.Reset();
+			}
+			ShowWorld(game_state, screenTop, screenBottom);
+		}
 		swiWaitForVBlank();
 	}
 }
