@@ -26,17 +26,14 @@ int main (void)
 	{
 		RunTimer();
 		consoleClear();
-		scanKeys();
-		int held=keysHeld();
+		int lin , col;
+		unsigned short *fb = VRAM_A ;
+		for (lin =0; lin <192; lin ++){
+			for (col =0; col <256; col ++){
+				fb[lin * 256 + col ] = RGB15 (0 , 0, col *32/256) ;
+			}
+		}
 
-		if (GetSeconds() % 2 == 0)
-		{
-			REG_DISPCNT  = MODE_FB0;
-		}
-		if (GetSeconds() % 2 == 1)
-		{
-			REG_DISPCNT  = MODE_FB1;
-		}
 		swiWaitForVBlank();
 	}
 	return 0;
