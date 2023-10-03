@@ -13,9 +13,9 @@ int GetSeconds(){
 
 void DrawSquare(int coords[], int size){
 	unsigned short *fbA = VRAM_A;
-	for(int i = coords[0]; i < coords[0]+size; i++){
-		for(int j = coords[1]; j < coords[1]+size; j++){
-			fbA[j*256 + i] = RGB15(31,31,31);
+	for(int i = coords[1]; i < coords[1]+size; i++){
+		for(int j = coords[0]; j < coords[0]+size; j++){
+			fbA[i*256 + j] = RGB15(31,31,31);
 		}
 	}
 }
@@ -26,6 +26,15 @@ void ClearDisplay(){
 			fbA[i*256 + j] = RGB15(0,0,0);
 		}
 	}
+}
+int Clamp(int val, int min, int max){
+	if(val < min){
+		val = min;
+	}
+	else if (val > max){
+		val = max;
+	}
+	return val;
 }
 int main (void)
 {
@@ -63,7 +72,8 @@ int main (void)
 			coords[0] -= 1;
 
 		}
-		
+		coords[0] = Clamp(coords[0],0,256-size);
+		coords[1] = Clamp(coords[1],0,192-size);
 		swiWaitForVBlank();
 	}
 	return 0;
