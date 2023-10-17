@@ -155,8 +155,8 @@ int main( void )
 
 		}
 		if(keys & KEY_X){
-	BGCTRL[0]    = BG_32x32 | BG_COLOR_256 | BG_MAP_BASE(0) | BG_TILE_BASE(1) | BG_PRIORITY(3);  // Bottom
-	BGCTRL[1]    = BG_32x32 | BG_COLOR_256 | BG_MAP_BASE(1) | BG_TILE_BASE(2) | BG_PRIORITY(2);  // Top
+			BGCTRL[0]    = BG_32x32 | BG_COLOR_256 | BG_MAP_BASE(0) | BG_TILE_BASE(1) | BG_PRIORITY(3);  // Bottom
+			BGCTRL[1]    = BG_32x32 | BG_COLOR_256 | BG_MAP_BASE(1) | BG_TILE_BASE(2) | BG_PRIORITY(2);  // Top
 			
 		}
 		swiWaitForVBlank();
