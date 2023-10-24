@@ -24,6 +24,11 @@ int main(void)
 	consoleDemoInit();
 	while(1) 
 	{
+		
+		iprintf("\x1b[8;0H %d", counterA);
+		iprintf("\x1b[10;0H %d", counterB);
+		iprintf("\x1b[12;0H %d", counterUp);
+		iprintf("\x1b[14;0H %d", counterDown);
 		while (!(~REG_KEYINPUT & 0b0000000011000011)){
 			iprintf("\x1b[6;0H Waiting for key");
 		}
@@ -33,11 +38,6 @@ int main(void)
 		if((~REG_KEYINPUT & 0b0000000010000000)) counterDown++;
 
 		// std::bitset<16> byte1 = std::bitset<16>(~REG_KEYINPUT & 0b0000000011000011); // byte1.to_string().c_str()
-		
-		iprintf("\x1b[6;0H %d", counterA);
-		iprintf("\x1b[6;0H %d", counterB);
-		iprintf("\x1b[6;0H %d", counterUp);
-		iprintf("\x1b[6;0H %d", counterDown);
 		swiWaitForVBlank();
 	}
 }
