@@ -16,19 +16,28 @@ public:
 
 int main(void)
 {
-	int counter = 0;
+	int counterA = 0;
+	int counterB = 0;
+	int counterDown = 0;
+	int counterUp = 0;
 	// logState = new LogState();
 	consoleDemoInit();
-	u16 lastVal;
 	while(1) 
 	{
-		u16 val = ~REG_KEYINPUT & 0b0000000011000011;
-		if (val && val != lastVal){
-			counter++;	
+		while (!(~REG_KEYINPUT & 0b0000000011000011)){
+			iprintf("\x1b[6;0H Waiting for key");
 		}
-		lastVal = val;
+		if((~REG_KEYINPUT & 0b0000000000000001)) counterA++;
+		if((~REG_KEYINPUT & 0b0000000000000010)) counterB++;
+		if((~REG_KEYINPUT & 0b0000000001000000)) counterUp++;
+		if((~REG_KEYINPUT & 0b0000000010000000)) counterDown++;
+
 		// std::bitset<16> byte1 = std::bitset<16>(~REG_KEYINPUT & 0b0000000011000011); // byte1.to_string().c_str()
-		iprintf("\x1b[6;0H %d", counter);
+		
+		iprintf("\x1b[6;0H %d", counterA);
+		iprintf("\x1b[6;0H %d", counterB);
+		iprintf("\x1b[6;0H %d", counterUp);
+		iprintf("\x1b[6;0H %d", counterDown);
 		swiWaitForVBlank();
 	}
 }
