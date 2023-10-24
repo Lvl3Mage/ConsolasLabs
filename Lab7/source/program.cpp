@@ -14,7 +14,7 @@ public:
 	}
 };
 // int btn_pressed(){
-	
+
 // }
 // int main(void)
 // {
@@ -34,30 +34,37 @@ public:
 // 		swiWaitForVBlank();
 // 	}
 // }
-int contador = 0;
+int counterA = 0;
+int counterB = 0;
+int counterUp = 0;
+int counterDown = 0;
 
-void int_boton() 
+void btn_pressed() 
 {
-  if (REG_KEYINPUT == 0x03FE)
-  {
-    iprintf("\x1b[1;0H Boton A Pulsado");
-    contador = 0;
-  }
+	u16 keyA = ~REG_KEYINPUT & 0b0000000000000001;
+	u16 keyB = ~REG_KEYINPUT & 0b0000000000000010;
+	u16 keyDown = ~REG_KEYINPUT & 0b0000000010000000;
+	u16 keyUp = ~REG_KEYINPUT & 0b0000000001000000;
+	if (keyA) counterA++;
+	if (keyB) counterB++;
+	if (keyDown) counterDown++;
+	if (keyUp) counterUp++;
 }
 
 int main(void)
 {
-  irqSet(IRQ_KEYS,int_boton);
-  irqEnable(IRQ_KEYS); 
-  REG_KEYCNT = 0x4001; 
-  
-  consoleDemoInit();
-  while (1)
-  { 
-    contador ++;
-    iprintf("\x1b[1;0HPulsa A                ");
-    iprintf("\x1b[14;0HContador = %04i", contador);
+	irqSet(IRQ_KEYS,btn_pressed);
+	irqEnable(IRQ_KEYS); 
+	REG_KEYCNT = 0x40C3; 
 
-    swiWaitForVBlank();
-  }
+	consoleDemoInit();
+	while (1)
+	{ 
+		iprintf("\x1b[1;0HCounterA %d", counterA);
+		iprintf("\x1b[3;0HCounterB %d", counterB);
+		iprintf("\x1b[5;0HCounterUp %d", counterUp);
+		iprintf("\x1b[7;0HCounterDown %d", counterDown);
+
+		swiWaitForVBlank();
+	}
 }
