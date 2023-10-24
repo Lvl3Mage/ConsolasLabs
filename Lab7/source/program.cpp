@@ -16,7 +16,7 @@ void btn_pressed()
 	if (keyB) TIMER_DATA(0)=49152; 
 	if (keyDown) counter = 0;
 	if (keyUp) TIMER_DATA(0)=0; 
-	TIMER_CR(0) = TIMER_DIV_1024 | TIMER_ENABLE | TIMER_IRQ_REQ ;
+	// TIMER_CR(0) = TIMER_DIV_1024 | TIMER_ENABLE | TIMER_IRQ_REQ ;
 }
 int main(void) 
 {
