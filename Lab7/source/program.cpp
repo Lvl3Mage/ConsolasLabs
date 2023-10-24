@@ -13,7 +13,7 @@ int main(void)
 	irqEnable(IRQ_TIMER0);
 	irqSet(IRQ_TIMER0,int_timer); 
 
-	TIMER_DATA(0)=32764; 
+	TIMER_DATA(0)=49152; 
 	TIMER_CR(0) = TIMER_DIV_1024 | TIMER_ENABLE | TIMER_IRQ_REQ ;
 	while(1) 
 	{
