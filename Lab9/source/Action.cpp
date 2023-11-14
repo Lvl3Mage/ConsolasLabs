@@ -1,5 +1,5 @@
 #include "Action.h"
-
+#include "Vector2.cpp"
 Action::Action()
 {
     action = 0;
@@ -14,3 +14,4 @@ void Action::SetUp()    { action = 1; }
 void Action::SetRight() { action = 2; }
 void Action::SetDown()  { action = 3; }
 void Action::SetLeft()  { action = 4; }
+
